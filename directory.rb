@@ -65,7 +65,6 @@ def process(selection)
     end
   when "3"
     save_students
-    puts "Students saved"
     puts " "
   when "4"
     load_students
@@ -126,8 +125,10 @@ def print_footer
 end
 
 def save_students
+  puts "Where would you like to save?"
+  user_input = STDIN.gets.chomp
   #open the file for writing
-  file = File.open("students.csv", "w")
+  file = File.open(user_input, "w")
   #iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort], student[:country_born], student[:sport]]
@@ -135,6 +136,7 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "Succesfully saved in #{user_input}."
 end
 
 def load_students(filename = "students.csv")
