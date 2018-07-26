@@ -16,8 +16,8 @@ def input_students
   end
   # while the name is not empty, repeat this code
   while !name.empty? do
-    # add the student hash to the array 
-    @students << {name: name, country_born: country_born, sport: sport, cohort: cohort.to_s}
+    # add the student hash to the array
+    add_info_to_students(name, cohort, country_born, sport)
     if @students.count == 1
       puts "Now we have 1 student"
     else
@@ -129,7 +129,7 @@ def save_students
   file = File.open("students.csv", "w")
   #iterate over the array of students
   @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
+    student_data = [student[:name], student[:cohort], student[:country_born], student[:sport]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
@@ -139,8 +139,8 @@ end
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
-    name, cohort = line.chomp.split(",")
-    @students << {name: name, cohort: cohort.to_sym}
+    name, cohort, country_born, sport = line.chomp.split(",")
+    add_info_to_students(name, cohort, country_born, sport)
   end
   file.close
 end
@@ -155,6 +155,10 @@ def try_load_students
     puts "Sorry, #{filename} doesn't exist."
     exit # quit the program
   end
+end
+
+def add_info_to_students(name, cohort, country, sport)
+  @students << {name: name, cohort: cohort.to_sym, country_born: country, sport: sport}
 end
 
 #nothing happends until we call the methods
