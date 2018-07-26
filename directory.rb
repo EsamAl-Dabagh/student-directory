@@ -135,21 +135,21 @@ def save_students
   puts "Where would you like to save?"
   user_input = STDIN.gets.chomp
   #open the file for writing
-  file = File.open(user_input, "w")
-  #iterate over the array of students
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort], student[:country_born], student[:sport]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  File.open(user_input, "w") do |file|
+    #iterate over the array of students
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort], student[:country_born], student[:sport]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end
   end
-  file.close
   puts "Succesfully saved in #{user_input}."
 end
 
 def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file_to_students_array(file)
-  file.close
+  File.open(filename, "r") do |file|
+    file_to_students_array(file)
+  end
 end
 
 def file_to_students_array(file)
