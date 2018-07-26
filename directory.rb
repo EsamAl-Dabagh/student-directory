@@ -1,9 +1,48 @@
 @students = [] # empty array accessible to all methods
 
+def input_students
+  puts "Please enter the names of the students"
+  puts "To finish, just hit return twice"
+  # get the first name
+  name = gets.chomp
+  if !name.empty? 
+    # ask for cohort
+    puts "What cohort?"
+    cohort = gets.chomp
+    puts "What is their country of birth?"
+    country_born = gets.chomp
+    puts "What is their favourite sport?"
+    sport = gets.chomp
+  end
+  # while the name is not empty, repeat this code
+  while !name.empty? do
+    # add the student hash to the array 
+    @students << {name: name, country_born: country_born, sport: sport, cohort: cohort.to_s}
+    if @students.count == 1
+      puts "Now we have 1 student"
+    else
+      puts "Now we have #{@students.count} students"
+    end
+    # get another name from the user
+    name = gets.chop
+    # break out of loop if name is empty
+    if name == ""
+      break
+    end
+    puts "What cohort?"
+    cohort = gets.chomp
+    puts "What is their country of birth?"
+    country_born = gets.chomp
+    puts "What is their favourite sport?"
+    sport = gets.chomp
+  end
+end
+
 def print_menu
   # 1. print the menu and ask the user what to do
   puts "1. Input the students"
   puts "2. Show the students"
+  puts "3. Save the list to students.csv"
   puts "9. Exit" 
 end
 
@@ -23,6 +62,8 @@ def process(selection)
     if @students.length > 0
       show_students
     end
+  when "3"
+    save_students
   when "9"
     exit # this will cause program to terminate
   else
@@ -37,55 +78,7 @@ def interactive_menu
   end
 end
 
-def input_students
 
-  puts "Please enter the names of the students"
-  puts "To finish, just hit return twice"
-
-  # get the first name
-  name = gets.chomp
-
-  if !name.empty? 
-    # ask for cohort
-    puts "What cohort?"
-    cohort = gets.chomp
-
-    puts "What is their country of birth?"
-    country_born = gets.chomp
-
-    puts "What is their favourite sport?"
-    sport = gets.chomp
-  end
-
-  # while the name is not empty, repeat this code
-  while !name.empty? do
-
-    # add the student hash to the array 
-    @students << {name: name, country_born: country_born, sport: sport, cohort: cohort.to_s}
-    if @students.count == 1
-      puts "Now we have 1 student"
-    else
-      puts "Now we have #{@students.count} students"
-    end
-
-    # get another name from the user
-    name = gets.chop
-
-    # break out of loop if name is empty
-    if name == ""
-      break
-    end
-
-    puts "What cohort?"
-    cohort = gets.chomp
-
-    puts "What is their country of birth?"
-    country_born = gets.chomp
-
-    puts "What is their favourite sport?"
-    sport = gets.chomp
-  end
-end
 
 def print_header
   puts "The students of Villains Academy".center(50)
@@ -129,6 +122,18 @@ def print_footer
   else
     puts "Overall, we have #{@students.count} great students".center(50)
   end
+end
+
+def save_students
+  #open the file for writing
+  file = File.open("students.csv", "w")
+  #iterate over the array of students
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
 end
 
 #nothing happends until we call the methods
