@@ -110,10 +110,6 @@ def print_students_list
     puts ""
 
   end
-    # while counter < students.length 
-    #   puts "#{students[counter][:name]} (#{students[counter][:cohort]} cohort)".center(50)
-    #   counter += 1
-    # end
 end
 
 def print_footer
@@ -138,11 +134,15 @@ end
 
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
+  file_to_students_array(file)
+  file.close
+end
+
+def file_to_students_array(file)
   file.readlines.each do |line|
     name, cohort, country_born, sport = line.chomp.split(",")
     add_info_to_students(name, cohort, country_born, sport)
   end
-  file.close
 end
 
 def try_load_students
