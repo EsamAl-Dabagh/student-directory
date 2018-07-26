@@ -1,3 +1,32 @@
+def interactive_menu
+  students = []
+  loop do
+    # 1. print the menu and ask the user what to do
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit" 
+    # 2. read the input and save it into a variable
+    selection = gets.chomp
+    # 3. do what the user has asked
+    case selection
+    when "1"
+      # input the students
+      students = input_students
+    when "2"
+      # show the students
+      if students.length > 0
+        print_header
+        print_this(students)
+        print_footer(students)
+      end
+    when "9"
+      exit # this will cause program to terminate
+    else
+      puts "I don't know what you meant, try again"
+    end
+  end
+end
+
 def input_students
 
   puts "Please enter the names of the students"
@@ -91,17 +120,11 @@ end
 
 def print_footer(names)
   if names.length == 1
-    print "Overall, we have 1 great student".center(50)
+    puts "Overall, we have 1 great student".center(50)
   else
-    print "Overall, we have #{names.count} great students".center(50)
+    puts "Overall, we have #{names.count} great students".center(50)
   end
 end
 
 #nothing happends until we call the methods
-students = input_students
-
-if students.length > 0
-  print_header
-  print_this(students)
-  print_footer(students)
-end
+interactive_menu
