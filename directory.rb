@@ -67,9 +67,16 @@ def process(selection)
     save_students
     puts " "
   when "4"
-    load_students
-    puts "Students loaded"
-    puts " "
+    puts "Which file would you like to load?"
+    user_input = STDIN.gets.chomp
+    if File.exists?(user_input)
+      load_students(user_input)
+      puts "Students loaded"
+      puts " "
+    else
+      puts "Sorry, that file doesn't exist."
+    end
+    
   when "9"
     puts "Exiting..."
     exit # this will cause program to terminate
