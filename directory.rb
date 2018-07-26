@@ -65,9 +65,14 @@ def process(selection)
     end
   when "3"
     save_students
+    puts "Students saved"
+    puts " "
   when "4"
     load_students
+    puts "Students loaded"
+    puts " "
   when "9"
+    puts "Exiting..."
     exit # this will cause program to terminate
   else
     puts "I don't know what you meant, try again"
@@ -83,7 +88,7 @@ end
 
 def print_header
   puts "The students of Villains Academy".center(50)
-  puts "-------------".center(50)
+  puts "================================".center(50)
 end
 
 def print_students_list
