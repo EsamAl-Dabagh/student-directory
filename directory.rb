@@ -1,10 +1,14 @@
+require 'csv'
+
 @students = [] # empty array accessible to all methods
 
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
+  
   # get the first name
   name = STDIN.gets.chomp
+
   if !name.empty? 
     # ask for cohort
     puts "What cohort?"
@@ -14,6 +18,7 @@ def input_students
     puts "What is their favourite sport?"
     sport = STDIN.gets.chomp
   end
+  
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
@@ -134,13 +139,15 @@ end
 def save_students
   puts "Where would you like to save?"
   user_input = STDIN.gets.chomp
-  #open the file for writing
-  File.open(user_input, "w") do |file|
+  
+  #open the file for writing using csv library
+  CSV.open(user_input, "w") do |file|
     #iterate over the array of students
     @students.each do |student|
       student_data = [student[:name], student[:cohort], student[:country_born], student[:sport]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      
+      # push array into CSV file
+      file << student_data
     end
   end
   puts "Succesfully saved in #{user_input}."
